@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Countries App</title>
+    <link rel="icon" href="/img/c.svg" type="image/x-icon" />
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+    <section class="top-nav">
+        <div class="container headerContainer">
+            <div class="logo">
+                <img src="/img/countriesapp.svg" alt="">
+            </div>
+            <input id="menu-toggle" type="checkbox" />
+            <label class='menu-button-container' for="menu-toggle">
+                <div class='menu-button'></div>
+            </label>
+            <ul class="menu">
+                <li><a href="/">Home</a></li>
+                <li><a href="/countries">API</a></li>
+            </ul>
+        </div>
+    </section>
+
+    <section class="searchSection">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <input id="search-input" class="search__input" type="text" placeholder="Search">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="cardSection">
+        <div class="container">
+            <div class="row" id="cardContainer">
+                <% countries.forEach((country)=> { %>
+                    <div class="col-lg-3 col-md-6" style="margin-bottom: 10px;">
+                        <div class="cards">
+                            <div class="cards-left">
+                                <p class="cards-emoji">
+                                    <%= country.emoji %>
+                                </p>
+                            </div>
+                            <div class="cards-right">
+                                <p class="country">Country: <%= country.name %>
+                                </p>
+                                <p class="code">Region: <%= country.continent.name %>
+                                </p>
+                                <p class="capital">Capital: <%= country.capital %>
+                                </p>
+                                <% if (country.languages.length> 0) { %>
+                                    <p class="language">Language: <%= country.languages[0].name %>
+                                    </p>
+                                    <% } %>
+                            </div>
+                        </div>
+                    </div>
+                    <% }) %>
+            </div>
+            <div class="pagination"></div>
+        </div>
+    </section>
+
+    <script>
+        // Search için gerekli JS kodları burada.
+        const searchInputt = document.querySelector('#search-input');
+        const cardContainers = document.querySelectorAll('.cardSection .container .row .col-lg-3');
+
+        searchInputt.addEventListener('input', (e) => {
+            const searchText = e.target.value.toLowerCase();
+            cardContainers.forEach(container => {
+                const card = container.querySelector('.cards');
+                const countryName = card.querySelector('.country').textContent.toLowerCase();
+                if (countryName.includes(searchText)) {
+                    container.classList.remove('d-none');
+                } else {
+                    container.classList.add('d-none');
+                }
+            });
+        });
+
+        // Clickable için gerekli JS kodları burada.
+        document.addEventListener("DOMContentLoaded", function () {
+            const cards = document.querySelectorAll('.cards');
+            const defaultCardIndex = 9; // 10. kartın indeksi 9'dur
+            let selectedCard = cards[defaultCardIndex];
+
+            selectedCard.classList.add("color-change");
+
+            cards.forEach(card => {
+                card.addEventListener('click', () => {
+                    if (selectedCard !== null) {
+                        selectedCard.classList.remove('color-change');
+                    }
+                    if (selectedCard !== card) {
+                        card.classList.add('color-change');
+                        selectedCard = card;
+                    } else {
+                        selectedCard = cards[defaultCardIndex];
+                        cards[defaultCardIndex].classList.add("color-change");
+                    }
+                });
+            });
+        });
+
+    </script>
+</body>
+
+</html>
