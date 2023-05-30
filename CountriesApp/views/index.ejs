@@ -42,7 +42,7 @@
         <div class="container">
             <div class="row" id="cardContainer">
                 <% countries.forEach((country)=> { %>
-                    <div class="col-lg-3 col-md-6" style="margin-bottom: 10px;">
+                    <div class="col-lg-3 col-md-6 card-item" style="margin-bottom: 10px;">
                         <div class="cards">
                             <div class="cards-left">
                                 <p class="cards-emoji">
@@ -56,16 +56,16 @@
                                 </p>
                                 <p class="capital">Capital: <%= country.capital %>
                                 </p>
-                                <% if (country.languages.length> 0) { %>
+                                <% if (country.languages.length > 0) { %>
                                     <p class="language">Language: <%= country.languages[0].name %>
                                     </p>
-                                    <% } %>
+                                <% } %>
                             </div>
                         </div>
                     </div>
-                    <% }) %>
+                <% }) %>
             </div>
-            <div class="pagination"></div>
+
         </div>
     </section>
 
